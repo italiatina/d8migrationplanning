@@ -1,0 +1,382 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="description" content="Migration session for Drupal North 2016">
+		<meta name="author" content="Novella Chiechi">
+		<meta name="author" content="Ryan Weal">
+
+		<title>Planning a Real Life D8 Migration</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/kafeibeige.css">
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+	<header id="attribution"></header>
+
+			<div class="slides">
+				<section>
+					<a href="https://kafei.ca"><img src="images/kafeiIcon.png"></a>
+					<h1>Planning a Real Life D8 Migration</h1>
+					<h2>
+						<a href="https://github.com/kafeiinteractiff"><i class="fa fa-twitter"></i></a>
+						<a href="https://twitter.com/kafeiinteractif"><i class="fa fa-github"></i></a>
+						<a href="https://www.drupal.org/kafei-interactih1-inc"><i class="fa fa-drupal"></i></a>
+					</h2>
+
+				</section>
+
+<!---Section: Decisions, Decisions---->
+				<section>
+
+					<section>
+						<h1>Decisions, decisions</h1>
+					</section>
+
+					<section>
+						<h2>Do we really have to move?</h2>
+						<ul>
+							<li class="fragment">D6 - yes!</li>
+							<li class="fragment">D7 - It's not imperative, but certainly worthwhile to begin the planning process.</li>
+						</ul>
+
+							<aside class="notes">
+								<ul>
+									<li>If you’re using Drupal 6, you need to move. Support ended on February 24, 2016. It is possible to contract long-term support, but recommended to migrate.</li>
+									<li>If you’re using Drupal 7, then you don’t have to move. Howeer, if you’d like to do some rearchitecting, it may save time and money in the long run to begin planning and testing now.</li>
+								</ul>
+							</aside>
+					</section>
+
+					<section>
+						<h2>Do we have to use <em>migrate</em>?</h2>
+							<span class="fragment">Strictly speaking, no. There is always cut and paste.  </span><span class="fragment"><em>But</em>,Migrate is now the officially preferred way to upgrade.</span>
+
+						<aside class="notes">
+							<p>
+								Migration provides:
+								<ul>
+									<li>Security updates for years to come.</li>
+									<li>The opportunity to rearchitect.</li>
+								</ul>
+								You're probably going to go down this road because your needs are sophisticated.
+							</p>
+						</aside>
+					</section>
+
+					<section>
+						<h2>What is currently supported?</h2>
+						<ul class="fragment">
+							<li>D6 -> D8 migrations</li>
+							<li>CSV -> D8 migrations (see migrate_plus)</li>
+							<li>D7->D8</li>
+							<li>XML->D8 (see migrate_plus)</li>
+						</ul>
+					</section>
+
+				</section>
+
+<!---Section: Before you migrate---->
+				<section>
+
+					<section>
+						<h1>Before you migrate</h1>
+					</section>
+
+					<section>
+						<h2>Onboard your content stakeholder(s)</h2>
+						<p class="fragment">They should have at least a rudimentary understanding of:</p>
+						<ul class="fragment">
+							<li>Drupal</li>
+							<li>migrations</li>
+							<li>entity/content types</li>
+							<li>nodes</li>
+							<li>taxonomy</li>
+							<li>blocks</li>
+							<li>views</li>
+						</ul>
+
+						<aside class="notes">
+							<p>Ideally, the content stakeholder should have at least a rudimentary understanding of all these things.</p>
+							<p>If they don’t, perhaps introduce them to short videos on the subjects. We curate our own youtube channel of stakeholder videos and it works well.</p>
+							<p>Don’t give them all the videos at the same time, but as the topics come up, refer them.</p>
+						</aside>
+					</section>
+
+					<section>
+						<h2>Enumerate the migrations - how many content types, entity types, etc.</h2>
+						<p class="fragment">Is the migration being done as part of a development process?</p>
+						<p class="fragment">Is the whole site being migrated, or just part of it?</p>
+						<div class="fragment action">
+							<span><i class="fa fa-road"></i></span>
+							<span>Create a "Content Migration Mappings" spreadsheet mapping out old to new entity types/fields/etc.<br>Stakeholder(s) must review and approve the plan.</span>
+						</div>
+						<div class="fragment action">
+							<span><i class="fa fa-road"></i></span>
+							<span>Maintain a "Bug Tracker" spreadsheet for content stakeholder to participate and review post-migration.</span>
+						</div>
+						<aside class="notes">
+							<p>General spreadsheet tips:</p>
+								<ul>
+									<li>Organize your tabs by the NEW content types.</li>
+									<li>Have an “overview” tab, where you keep a quick list of what is going into what.</li>
+									<li>Keep a notes column for yourself and a notes column for your client.</li>
+									<li>Grant access to your bug tracker if the client is very savvy and/or can be trained to comply with your processes.</li>
+								</ul>
+						</aside>
+					</section>
+					<section>
+						<h3>Content Migration Mappings</h3>
+						<a href ="https://docs.google.com/spreadsheets/d/168lKK1EQUGggR7ecjhPeUseAISUZ5_G_oY43mSV8jFI/edit?usp=sharing">Get the example <strong>here.</strong></a>
+					</section>
+					<section data-background-image="images/mappings-overview.png">
+						<p class="caption">You'll need an overview.</p>
+					</section>
+					<section data-background-image="images/mappings-profile.png">
+						<p class="caption">One tab for each content type.</p>
+					</section>
+					<section>
+						<h3>Bug Tracker</h3>
+						<a href ="https://docs.google.com/spreadsheets/d/1RCaSwBi8SAV0N5E6Rg-nJ1Y3cFSdWRTjphzfNDWmB2Y/edit?usp=sharing">Get the example <strong>here.</strong></a>
+					</section>
+					<section data-background-image="images/bugtracker-spreadsheet.png">
+						<p class="caption">Assign responsibility.</p>
+					</section>
+				</section>
+<!---Section: The Moving House Analogy---->
+				<section>
+					<section>
+						<h1>The "moving house" analogy</h1>
+					</section>
+					<section>
+						<h2 class="fragment">6 action Items for your migration</h2>
+						<ol class="fragment">
+							<li>Mappings - do, review, approve.</li>
+							<aside class="notes">
+								<p>You need to know what’s coming with and what’s not. Tech-wise this means the spreadsheet demonstrated in the previous slides.</p>
+							</aside>
+							<li>Migrate all the things</li>
+							<aside class="notes">
+								<p>Migrate the simple things first and the complex things later.</p>
+								<ul>
+									<li>Things like content types and standard CCK fields, users, files, menus, are easy and will come right over (see our next presentation for more on that!).</li>
+									<li>More complex things may require writing custom queries to get missing data. This will involve hook_prepare_row, and plugins.</li>
+									<li>This gives the assurance that things are indeed getting packed up and moved over.</li>
+									<li>There are migrations that will bring across your content types as is.</li>
+								</ul>
+							</aside>
+							<li>Polish the migration</li>
+							<aside class="notes">
+								<p>Clean up the body text, filter out “known bad” URLs, take care of any “nice to have” items that are “bite-sized.”</p>
+								<ul>
+									<li>identify bad HTML, strip it out</li>
+									<li>regular expressions, simplehtmldom, etc.</li>
+								</ul>
+							</aside>
+							<li>Review as a team</li>
+							<aside class="notes">
+								<p>Bring in the other stakeholders for a review (and share your findings with the developers).</p>
+								<ul>
+									<li>List out any items that are missing and make a plan to address them.</li>
+								</ul>
+							</aside>
+							<li>Test, test, and test some more</li>
+							<aside class="notes">
+								<p>Lists of things to test and types of tests can be created and kept on the bug tracker.</p>
+							</aside>
+							<li>Dress rehearsal, final approval, launch!</li>
+							<aside class="notes">
+								<p>Make and review a launch list. This will put everyone into countdown mode (and that is good). This can also sit in a tab on your bug tracker spreadsheet.</p>
+							</aside>
+						</ol>
+					</section>
+<!-----SUBSECTION: Individual Action Items-------->
+					<section>
+						<p class="hljs-quote">Action Item 1: Mappings - Do, review, approve</p>
+						<h3>Where will things go in the new house?</h3>
+						<ul>
+							<li>Create new architecture.</li>
+								<aside class="notes">
+									<p>Here you can decide how best to get your legacy data into customized structures. You can:</p>
+									<ul>
+										<li>Funnel multiple content types into one (one migration for each source)</li>
+										<li>Break out one legacy content type into multiple new content types (this can be especially helpful if you are improving admin interface or a portal website.</li>
+										<li>Use tools like entity bundles and IEF to make “meta” content types.</li>
+									</ul>
+								</aside>
+							<li>Map it out.</li>
+								<aside class="notes">
+									<p>Put it on the spreadsheet according to the NEW content types.</p>
+									<p>Plot out new taxonomy and/or menu structures. Formulate your migration templates to provide for this new structure.</p>
+								</aside>
+							<li>Deploy your code to the migrate environment.</li>
+							<aside class="notes">
+								<p>Expect to have to destroy and rebuild the migrated site.  D8 has no updates, so it will be a complete rollback (ie, fresh site) every time.</p>
+								<p>Use CMI to protect the new house you just built!</p>
+							</aside>
+						</ul>
+					</section>
+					<section>
+						<p class="hljs-quote">Action Items 2 & 3: Migrate all the things</p>
+						<h3>Get the right moving van, keep it tidy</h3>
+						<ul>
+							<li>Consider your workflows carefully. What is unique about your site(s)?</li>
+							<aside class="notes">
+								<p>All or part of your migration project may benefit from non-standard treatment (ie, not just using migrate).  Keep an open mind when you are planning your migration.</p>
+								<ul>
+									<li>Drupal Migrate</li>
+									<li>CSV, XML (soon!) imports</li>
+									<li>Copy & Paste (yes, we said it! It could be appropriate for some part)</li>
+								</ul>
+							</aside>
+							<li>Not coming? Label it "Do Not Migrate (DNM)."</li>
+							<aside class="notes">
+								<p>This is a holdover from D7 but it is very valuable. Keep yourself organized by labeling fields that should not be migrated as "DNM."</p>
+								<p>You can also see what has come over so far with drush and migrate_plus, since there isn't a D2D-style UI for migrate.</p>
+							</aside>
+						</ul>
+					</section>
+					<section>
+						<p class="hljs-quote">Action Items 4 & 5: Review and Test</p>
+						<h3>Unpack and put away</h3>
+						<ul>
+							<li>Create a list of things for testing.</li>
+							<aside class="notes">
+								<p>Standard testing stuff also includes:</p>
+								<ul>
+									<li>tags in body text</li>
+									<li>stubs</li>
+								</ul>
+							</aside>
+							<li>Provide a representative URL to test</li>
+							<aside class="notes">
+								<p>When you ask people to test, make sure to include a representative node, so that people know what they’re looking at/for. Otherwise, they won’t do it. They really won’t.</p>
+							</aside>
+							<li>Use the issue tracker spreadsheet</li>
+							<aside class="notes">
+								<p>Give client and dev their own columns</p>
+								<p>Ask people to put their initials before their comments</p>
+							</aside>
+							<li>Keep it documented!</li>
+							<aside class="notes">
+								<p>If you're using some sort of wiki, then document there. Failing this, just document things in the issue tracker.</p>
+								<p>It doesn't have to be fancy, just searchable!</p>
+							</aside>
+						</ul>
+					</section>
+					<section>
+						<p class="hljs-quote">Action Item 6: Dress rehearsal, final approval, launch!</p>
+						<h3>Housewarming!</h3>
+						<ul>
+							<li>Get a thorough tour of the new site.</li>
+							<aside class="notes">
+								<p>Drupal 8 comes with a "Tour" module - make documentation and tour part of your budget.</p>
+							</aside>
+							<li>Collaborate on help text.</li>
+							<aside class="notes">
+								<p>For more advanced users, learn to modify the help text. You'll need to onboard others to your new site, and something as specific as help text won't be part of the tour.</p>
+							</aside>
+							<li>Practice making content changes on Test.</li>
+							<aside class="notes">
+								<p>Here’s where it helps to have more than one site (having a Dev, a Test, and a Live site is usually best practice).</p>
+							</aside>
+							<li>Document the dust bunnies and deprecate the site gracefully.</li>
+							<aside class="notes">
+								<p>Keep a copy of the legacy database and the migration code safe and accessible.</p>
+									<ul>
+										<li>Password-protected subdomain such as legacy.example.com.</li>
+										<li>Docker image.</li>
+									</ul>
+								<p>When all is said and done, there will be some dust bunnies left at the old home. Document them as best you can and move on.</p>
+							</aside>
+						</ul>
+					</section>
+				</section>
+<!-----SECTION: Migration Work Order-------->
+				<section>
+					<section>
+						<h1>Your migration "work order"</h1>
+					</section>
+					<section>
+						<h2>Why create a work order?</h2>
+						<ul class="fragment">
+							<li>To better plan your time and budget.</li>
+							<li>It will help you more concretely plan the future of your site.</li>
+							<li>Vendors will be able to propose more accurate budgets.</li>
+						</ul>
+						<aside class="notes">
+						<p>Now that you have all this info, you can build your work order. This is the information vendors need.</p>
+						</aside>
+					</section>
+					<section>
+						<h2>Things to include:</h2>
+						<ul>
+							<li>Dates</li>
+							<li>Do you have any giant media blitz planned?</li>
+							<li>Timeframe</li>
+							<li>Who will be SPOC (Single Point of Contact)?</li>
+							<li>Custom modules</li>
+							<li>Checkpoints (Review and approval is important. Make it official.)</li>
+							<li>How many entity/content types do you have?</li>
+							<li>How many vocabularies do you have?</li>
+							<li>How many users do you have?</li>
+							<li>Does your site include ecommerce?</li>
+							<li>Does your site have forums?</li>
+							<li>Do you want to re-architect? Even just a little bit?</li>
+						</ul>
+					</section>
+					<section>
+						<p>Bring potential vendors a plan that includes these things, and you will be well on your way to a planned, successful migration!</p>
+					</section>
+				</section>
+<!--------Now it's your turn------->
+				<section>
+					<h1>Now it's your turn!</h1>
+					<p>What are some strategies you've learned during your projects?</p>
+					<p>Any dragons woken? Pacified?</p>
+					<img class="stretch" src="images/dragon.png">
+				</section>
+<!--------Now it's your turn------->
+				<section>
+					<h1>Resources</h1>
+					<p>What are some strategies you've learned during your projects?</p>
+					<p>Any dragons woken? Pacified?</p>
+					<img class="stretch" src="images/dragon.png">
+				</section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				history: true,
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
